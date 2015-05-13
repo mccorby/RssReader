@@ -6,12 +6,10 @@ import android.preference.PreferenceManager;
 
 import com.mccorby.rssreader.Constants;
 import com.mccorby.rssreader.R;
-import com.mccorby.rssreader.model.Channel;
-import com.mccorby.rssreader.model.Mapper;
-import com.mccorby.rssreader.model.RssFeed;
+import com.mccorby.rssreader.api.model.Channel;
+import com.mccorby.rssreader.api.model.Mapper;
 import com.mccorby.rssreader.model.RssFeedList;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit.RestAdapter;

@@ -1,5 +1,6 @@
 package com.mccorby.rssreader.api;
 
+import com.mccorby.rssreader.api.model.RSS;
 import com.mccorby.rssreader.model.RSS;
 import com.mccorby.rssreader.model.RssFeedList;
 

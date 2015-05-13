@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 
 import com.mccorby.rssreader.R;
 import com.mccorby.rssreader.loader.FeedListLoader;
-import com.mccorby.rssreader.model.Channel;
 import com.mccorby.rssreader.model.RssFeed;
 
 import java.util.List;
