@@ -4,6 +4,7 @@ import android.content.AsyncTaskLoader;
 import android.content.Context;
 
 import com.mccorby.rssreader.api.RetrofitApiCaller;
+import com.mccorby.rssreader.dao.NetworkDAO;
 import com.mccorby.rssreader.model.RssFeed;
 
 import java.util.ArrayList;
@@ -36,8 +37,8 @@ public class FeedListLoader extends AsyncTaskLoader<List<RssFeed>> {
     public List<RssFeed> loadInBackground() {
         // This method is called on a background thread and should generate a
         // new set of data to be delivered back to the client.
-        List<RssFeed> data = new ArrayList<RssFeed>();
-        List<RssFeed> nData = RetrofitApiCaller.getInstance(getContext()).getFeeds();
+        List<RssFeed> data = new ArrayList<>();
+        List<RssFeed> nData = new NetworkDAO().getRssFeeds(getContext());
         data = nData;
         return data;
     }

@@ -1,5 +1,7 @@
 package com.mccorby.rssreader.dao;
 
+import android.content.Context;
+
 import com.mccorby.rssreader.model.RssFeed;
 
 import java.util.List;
@@ -15,5 +17,5 @@ public interface FeedDAO {
      * Get a list of Rss Feeds
      * @return a list of RssFeed objects
      */
-    List<RssFeed> getRssFeeds();
+    List<RssFeed> getRssFeeds(Context context);
 }

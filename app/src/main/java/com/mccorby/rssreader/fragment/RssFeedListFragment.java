@@ -1,5 +1,6 @@
 package com.mccorby.rssreader.fragment;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.LoaderManager;
 import android.content.Loader;
@@ -26,6 +27,13 @@ public class RssFeedListFragment extends Fragment implements LoaderManager.Loade
     private static final String TAG = RssFeedListFragment.class.getSimpleName();
     private static final int FEED_LIST_LOADER = 0;
 
+    /** A listener on events in the list, mainly the Activity that handles this fragment. */
+    private FeedListCallback mListener;
+
+    public interface FeedListCallback {
+        void onFeedSelected(RssFeed feed);
+    }
+
     public RssFeedListFragment() {
     }
 
@@ -33,6 +41,16 @@ public class RssFeedListFragment extends Fragment implements LoaderManager.Loade
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getLoaderManager().initLoader(FEED_LIST_LOADER, null, this);
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof FeedListCallback) {
+            mListener = (FeedListCallback) activity;
+        } else {
+            throw new IllegalStateException("Activity must implement FeedListCallback");
+        }
     }
 
     @Override

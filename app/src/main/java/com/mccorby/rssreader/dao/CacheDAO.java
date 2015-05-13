@@ -1,5 +1,7 @@
 package com.mccorby.rssreader.dao;
 
+import android.content.Context;
+
 import com.mccorby.rssreader.model.RssFeed;
 
 import java.util.List;
@@ -13,7 +15,7 @@ import java.util.List;
 public class CacheDAO implements FeedDAO {
 
     @Override
-    public List<RssFeed> getRssFeeds() {
+    public List<RssFeed> getRssFeeds(Context context) {
         return null;
     }
 }
