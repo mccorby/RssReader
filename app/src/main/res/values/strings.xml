@@ -2,4 +2,8 @@
     <string name="app_name">RssReader</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="default_source_url">http://www.xatakandroid.com/tag/feeds/rss2.xml</string>
 </resources>
