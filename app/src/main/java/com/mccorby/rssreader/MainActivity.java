@@ -2,6 +2,7 @@ package com.mccorby.rssreader;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -11,11 +12,19 @@ import com.mccorby.rssreader.model.RssFeed;
 
 public class MainActivity extends Activity implements RssFeedListFragment.FeedListCallback{
 
+    private static final String TAG = MainActivity.class.getSimpleName();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        if (savedInstanceState == null) {
+            getFragmentManager().beginTransaction()
+                    .add(android.R.id.content, new RssFeedListFragment())
+                    .commit();
+        }
 
     }
 
@@ -45,5 +54,6 @@ public class MainActivity extends Activity implements RssFeedListFragment.FeedLi
     @Override
     public void onFeedSelected(RssFeed feed) {
         // TODO Push detail fragment
+        Log.d(TAG, "onFeedSelected " + feed.toString());
     }
 }

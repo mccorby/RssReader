@@ -2,6 +2,9 @@ package com.mccorby.rssreader.api.model;
 
 /**
  * This model was extracted from <a href="https://gist.github.com/macsystems/01d7e80554efd344b1f9">this gist</a>
+ *
+ * Some modifications applied.
+ *
  * Created by JAC on 13/05/2015.
  */
 import org.simpleframework.xml.Attribute;

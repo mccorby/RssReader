@@ -5,6 +5,8 @@ import android.app.Fragment;
 import android.app.LoaderManager;
 import android.content.Loader;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +15,9 @@ import android.view.ViewGroup;
 import com.mccorby.rssreader.R;
 import com.mccorby.rssreader.loader.FeedListLoader;
 import com.mccorby.rssreader.model.RssFeed;
+import com.mccorby.rssreader.view.FeedListAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -22,13 +26,17 @@ import java.util.List;
  *
  * The fragment is responsible for calling the DAO and display the results.
  */
-public class RssFeedListFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<RssFeed>> {
+public class RssFeedListFragment extends Fragment implements
+        LoaderManager.LoaderCallbacks<List<RssFeed>>,
+        FeedListAdapter.FeedListItemListener{
 
     private static final String TAG = RssFeedListFragment.class.getSimpleName();
     private static final int FEED_LIST_LOADER = 0;
 
     /** A listener on events in the list, mainly the Activity that handles this fragment. */
     private FeedListCallback mListener;
+    private FeedListAdapter mAdapter;
+    private List<RssFeed> mFeedList = new ArrayList<>();
 
     public interface FeedListCallback {
         void onFeedSelected(RssFeed feed);
@@ -56,10 +64,24 @@ public class RssFeedListFragment extends Fragment implements LoaderManager.Loade
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_main, container, false);
+        // Inflate the layout for this fragment
+        View rootView = inflater.inflate(R.layout.fragment_feed_list, container, false);
+
+        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_feed_list_rv);
+        // Use a linear layout manager
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+        mAdapter = new FeedListAdapter(getActivity(), mFeedList, this);
+        recyclerView.setAdapter(mAdapter);
+        recyclerView.setHasFixedSize(true);
+
+        return rootView;
     }
 
-
+    @Override
+    public void onFeedItemSelected(RssFeed item) {
+        mListener.onFeedSelected(item);
+    }
 
     @Override
     public Loader<List<RssFeed>> onCreateLoader(int id, Bundle args) {
@@ -71,10 +93,14 @@ public class RssFeedListFragment extends Fragment implements LoaderManager.Loade
         for (RssFeed feed : data) {
             Log.d(TAG, feed.getTitle());
         }
+        mFeedList.clear();
+        mFeedList.addAll(data);
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onLoaderReset(Loader<List<RssFeed>> loader) {
-
+        mFeedList.clear();
+        mAdapter.notifyDataSetChanged();
     }
 }
