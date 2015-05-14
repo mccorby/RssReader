@@ -1,12 +1,15 @@
 package com.mccorby.rssreader.fragment;
 
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -22,6 +25,7 @@ import com.mccorby.rssreader.model.RssFeed;
  */
 public class RssFeedDetailFragment extends Fragment {
 
+    private static final String TAG = RssFeedDetailFragment.class.getSimpleName();
     /** The model used in this fragment. */
     private RssFeed mRssFeed;
 
@@ -37,6 +41,7 @@ public class RssFeedDetailFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         mRssFeed = getArguments().getParcelable(Constants.ARG_FEED);
     }
 
@@ -63,6 +68,24 @@ public class RssFeedDetailFragment extends Fragment {
 
         return rootView;
     }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        ((AppCompatActivity)activity).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case android.R.id.home:
+                getFragmentManager().popBackStack();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 
     public void setRssFeed(RssFeed feed) {
         this.mRssFeed = feed;

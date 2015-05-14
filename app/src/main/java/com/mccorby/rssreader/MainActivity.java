@@ -1,7 +1,8 @@
 package com.mccorby.rssreader;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,7 +12,7 @@ import com.mccorby.rssreader.fragment.RssFeedListFragment;
 import com.mccorby.rssreader.model.RssFeed;
 
 
-public class MainActivity extends Activity implements RssFeedListFragment.FeedListCallback{
+public class MainActivity extends AppCompatActivity implements RssFeedListFragment.FeedListCallback {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -20,13 +21,15 @@ public class MainActivity extends Activity implements RssFeedListFragment.FeedLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.action_toolbar);
+        setSupportActionBar(toolbar);
 
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction()
                     .add(R.id.container, new RssFeedListFragment())
+                    .addToBackStack(null)
                     .commit();
         }
-
     }
 
 
@@ -42,15 +45,15 @@ public class MainActivity extends Activity implements RssFeedListFragment.FeedLi
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
+        Log.d(TAG, "Home was pressed in activity");
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id) {
+            case R.id.action_settings:
+                return true;
         }
-
-        return super.onOptionsItemSelected(item);
+        return false;
     }
+
 
     @Override
     public void onFeedSelected(RssFeed feed) {
