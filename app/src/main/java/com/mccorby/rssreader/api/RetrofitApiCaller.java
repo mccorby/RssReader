@@ -73,8 +73,10 @@ public class RetrofitApiCaller {
         ApiCallerService service = mRestAdapter.create(ApiCallerService.class);
         List<Channel.Item> itemList = service.getFeeds().getChannel().itemList;
         RssFeedList list = new RssFeedList(itemList.size());
+        Mapper mapper = new Mapper();
         for (Channel.Item item : itemList) {
-            list.add(Mapper.getRssFeed(item));
+            list.add(mapper.getRssFeed(item));
+            mapper.reset();
         }
         return list;
     }

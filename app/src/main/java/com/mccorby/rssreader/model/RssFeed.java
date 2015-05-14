@@ -19,6 +19,7 @@ public class RssFeed implements Parcelable{
     private String mGuid;
     private Date mPubDate;
     private String mDescription;
+    private String mImageUrl;
 
     public RssFeed() {
 
@@ -77,6 +78,14 @@ public class RssFeed implements Parcelable{
         mDescription = description;
     }
 
+    public String getImageUrl() {
+        return mImageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        mImageUrl = imageUrl;
+    }
+
     /*=====================
      * The parcelable required members.
      */
@@ -98,6 +107,7 @@ public class RssFeed implements Parcelable{
         mGuid = in.readString();
         mPubDate = new Date(in.readLong());
         mDescription = in.readString();
+        mImageUrl = in.readString();
     }
 
     @Override
@@ -111,6 +121,7 @@ public class RssFeed implements Parcelable{
             dest.writeLong(0);
         }
         dest.writeString(mDescription);
+        dest.writeString(mImageUrl);
     }
 
     @Override

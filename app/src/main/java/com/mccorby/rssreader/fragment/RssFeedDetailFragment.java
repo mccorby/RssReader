@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 import com.mccorby.rssreader.Constants;
 import com.mccorby.rssreader.R;
 import com.mccorby.rssreader.model.RssFeed;
+import com.squareup.picasso.Picasso;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -96,6 +98,9 @@ public class RssFeedDetailFragment extends Fragment {
         if (mRssFeed != null) {
             mTitleTv.setText(mRssFeed.getTitle());
             mDescriptionTv.setText(Html.fromHtml(mRssFeed.getDescription()));
+            if (!TextUtils.isEmpty(mRssFeed.getImageUrl())) {
+                Picasso.with(getActivity()).load(mRssFeed.getImageUrl()).into(mImage);
+            }
         }
     }
 }

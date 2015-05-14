@@ -3,6 +3,7 @@ package com.mccorby.rssreader.view;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.mccorby.rssreader.R;
 import com.mccorby.rssreader.model.RssFeed;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -51,7 +53,9 @@ public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.ViewHo
         RssFeed feed = mFeedList.get(i);
         viewHolder.mTitleTv.setText(feed.getTitle());
         viewHolder.mDescTv.setText(Html.fromHtml(feed.getDescription()));
-        // TODO How to retrieve the image?
+        if (!TextUtils.isEmpty(feed.getImageUrl())) {
+            Picasso.with(mContext).load(feed.getImageUrl()).into(viewHolder.mImageView);
+        }
     }
 
     @Override
