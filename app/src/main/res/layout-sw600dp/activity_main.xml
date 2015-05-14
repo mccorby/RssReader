@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/action_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/corporate_bg"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/action_toolbar">
+
+        <fragment
+            android:id="@+id/list_frag"
+            class="com.mccorby.rssreader.fragment.RssFeedListFragment"
+            android:layout_width="@dimen/titles_size"
+            android:layout_height="match_parent"/>
+        <fragment
+            android:id="@+id/details_frag"
+            class="com.mccorby.rssreader.fragment.RssFeedDetailFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+</RelativeLayout>

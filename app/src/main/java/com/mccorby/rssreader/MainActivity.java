@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity implements RssFeedListFragme
         Toolbar toolbar = (Toolbar) findViewById(R.id.action_toolbar);
         setSupportActionBar(toolbar);
 
-        if (savedInstanceState == null) {
+        if (savedInstanceState == null && findViewById(R.id.container) != null) {
             getFragmentManager().beginTransaction()
                     .add(R.id.container, new RssFeedListFragment())
                     .addToBackStack(null)
@@ -58,17 +58,22 @@ public class MainActivity extends AppCompatActivity implements RssFeedListFragme
     @Override
     public void onFeedSelected(RssFeed feed) {
         Log.d(TAG, "onFeedSelected " + feed.toString());
-        RssFeedDetailFragment detailFragment = new RssFeedDetailFragment();
+        RssFeedDetailFragment detailFragment = (RssFeedDetailFragment) getFragmentManager().findFragmentById(R.id.details_frag);
 
-        // Add the feed as an argument.
-        Bundle args = new Bundle();
-        args.putParcelable(Constants.ARG_FEED, feed);
-        detailFragment.setArguments(args);
+        if (detailFragment == null) {
+            detailFragment = new RssFeedDetailFragment();
+            // Add the feed as an argument.
+            Bundle args = new Bundle();
+            args.putParcelable(Constants.ARG_FEED, feed);
+            detailFragment.setArguments(args);
 
-        getFragmentManager().beginTransaction()
-                .replace(R.id.container, detailFragment)
-                .addToBackStack(null)
-                .commit();
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.container, detailFragment)
+                    .addToBackStack(null)
+                    .commit();
+        } else {
+            detailFragment.setRssFeed(feed);
+        }
 
     }
 }

@@ -6,10 +6,9 @@
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/action_toolbar"
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#ff6d7fe2"
+        android:background="@color/corporate_bg"
         >
 
     </android.support.v7.widget.Toolbar>

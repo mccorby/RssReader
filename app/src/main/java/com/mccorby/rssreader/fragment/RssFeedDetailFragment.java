@@ -43,8 +43,11 @@ public class RssFeedDetailFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
-        mRssFeed = getArguments().getParcelable(Constants.ARG_FEED);
+
+        if (getArguments() != null) {
+            setHasOptionsMenu(true);
+            mRssFeed = getArguments().getParcelable(Constants.ARG_FEED);
+        }
     }
 
     @Override
@@ -74,7 +77,9 @@ public class RssFeedDetailFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        ((AppCompatActivity)activity).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (((AppCompatActivity) activity).getSupportActionBar() != null){
+            ((AppCompatActivity) activity).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     @Override
@@ -101,6 +106,10 @@ public class RssFeedDetailFragment extends Fragment {
             if (!TextUtils.isEmpty(mRssFeed.getImageUrl())) {
                 Picasso.with(getActivity()).load(mRssFeed.getImageUrl()).into(mImage);
             }
+            mActionBtn.setVisibility(View.VISIBLE);
+        } else {
+            // Hide button
+            mActionBtn.setVisibility(View.GONE);
         }
     }
 }
