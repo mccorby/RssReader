@@ -1,13 +1,36 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             tools:context="com.mccorby.rssreader.fragment.RssFeedDetailFragment">
+             >
+<LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              tools:context="com.mccorby.rssreader.fragment.RssFeedDetailFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment"/>
+        android:id="@+id/fragment_rss_feed_detail_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Title"/>
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/fragment_rss_feed_detail_description_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="This is the description of the feed"/>
+
+    <ImageView
+        android:id="@+id/fragment_rss_feed_detail_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:src="@mipmap/ic_launcher"/>
+
+    <Button
+        android:id="@+id/fragment_rss_feed_detail_action_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/show_navigator"/>
+</LinearLayout>
+</ScrollView>

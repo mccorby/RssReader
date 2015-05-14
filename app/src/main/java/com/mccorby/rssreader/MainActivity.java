@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.mccorby.rssreader.fragment.RssFeedDetailFragment;
 import com.mccorby.rssreader.fragment.RssFeedListFragment;
 import com.mccorby.rssreader.model.RssFeed;
 
@@ -22,7 +23,7 @@ public class MainActivity extends Activity implements RssFeedListFragment.FeedLi
 
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction()
-                    .add(android.R.id.content, new RssFeedListFragment())
+                    .add(R.id.container, new RssFeedListFragment())
                     .commit();
         }
 
@@ -53,7 +54,18 @@ public class MainActivity extends Activity implements RssFeedListFragment.FeedLi
 
     @Override
     public void onFeedSelected(RssFeed feed) {
-        // TODO Push detail fragment
         Log.d(TAG, "onFeedSelected " + feed.toString());
+        RssFeedDetailFragment detailFragment = new RssFeedDetailFragment();
+
+        // Add the feed as an argument.
+        Bundle args = new Bundle();
+        args.putParcelable(Constants.ARG_FEED, feed);
+        detailFragment.setArguments(args);
+
+        getFragmentManager().beginTransaction()
+                .replace(R.id.container, detailFragment)
+                .addToBackStack(null)
+                .commit();
+
     }
 }

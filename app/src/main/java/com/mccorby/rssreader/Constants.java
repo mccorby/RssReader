@@ -6,4 +6,5 @@ package com.mccorby.rssreader;
 public class Constants {
 
     public static final String PREFS_RSS_SOURCE_URL = "prefsSourceUrl";
+    public static final String ARG_FEED = "argFeed";
 }

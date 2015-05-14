@@ -1,5 +1,8 @@
 package com.mccorby.rssreader.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Date;
 
 /**
@@ -9,13 +12,17 @@ import java.util.Date;
  * Created by JAC on 13/05/2015.
  */
 
-public class RssFeed {
+public class RssFeed implements Parcelable{
 
     private String mTitle;
     private String mLink;
     private String mGuid;
     private Date mPubDate;
     private String mDescription;
+
+    public RssFeed() {
+
+    }
 
     @Override
     public String toString() {
@@ -69,4 +76,44 @@ public class RssFeed {
     public void setDescription(String description) {
         mDescription = description;
     }
-}
+
+    /*=====================
+     * The parcelable required members.
+     */
+
+    public static final Parcelable.Creator<RssFeed> CREATOR
+            = new Parcelable.Creator<RssFeed>() {
+        public RssFeed createFromParcel(Parcel in) {
+            return new RssFeed(in);
+        }
+
+        public RssFeed[] newArray(int size) {
+            return new RssFeed[size];
+        }
+    };
+
+    private RssFeed(Parcel in) {
+        mTitle = in.readString();
+        mLink = in.readString();
+        mGuid = in.readString();
+        mPubDate = new Date(in.readLong());
+        mDescription = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(mTitle);
+        dest.writeString(mLink);
+        dest.writeString(mGuid);
+        if (mPubDate != null) {
+            dest.writeLong(mPubDate.getTime());
+        } else {
+            dest.writeLong(0);
+        }
+        dest.writeString(mDescription);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }}
