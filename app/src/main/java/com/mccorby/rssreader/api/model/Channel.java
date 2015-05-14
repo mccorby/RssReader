@@ -78,7 +78,7 @@ public class Channel {
         String description;//The item synopsis.	Some of the most heated chatter at the Venice Film Festival this week was about the way that the arrival of the stars at the Palazzo del Cinema was being staged.
         @Element(name = "author", required = false)
         String author;//Email address of the author of the item. More.	oprah@oxygen.net
-        // @Element(name = "guid", required = false)
+        @Element(name = "guid", required = false)
         String guid;//A string that uniquely identifies the item. More.	<guid isPermaLink="true">http://inessential.com/2002/09/01.php#a2</guid>
         @Element(name = "pubDate", required = false)
         String pubDate;//	Indicates when the item was published. More.	Sun, 19 May 2002 15:21:36 GMT

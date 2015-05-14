@@ -98,7 +98,7 @@ public class RssFeedListFragment extends Fragment implements
     @Override
     public void onLoadFinished(Loader<List<RssFeed>> loader, List<RssFeed> data) {
         for (RssFeed feed : data) {
-            Log.d(TAG, feed.getTitle());
+            Log.d(TAG, feed.getTitle() + " ====== " + feed.getGuid());
         }
         mFeedList.clear();
         mFeedList.addAll(data);

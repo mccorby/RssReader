@@ -17,8 +17,34 @@ import java.util.List;
  */
 public class NetworkDAO implements FeedDAO {
 
+    private Context mContext;
+
+    public NetworkDAO(Context context) {
+        this.mContext = context;
+    }
+
     @Override
     public List<RssFeed> getRssFeeds(Context context) {
         return RetrofitApiCaller.getInstance(context).getFeeds();
     }
+
+    @Override
+    public void addFeeds(List<RssFeed> feedList) {
+        CacheDAO cacheDAO = new CacheDAO(mContext);
+        cacheDAO.open();
+        cacheDAO.addFeeds(feedList);
+        cacheDAO.close();
+    }
+
+    @Override
+    public void open() {
+
+    }
+
+    @Override
+    public void close() {
+
+    }
+
+
 }

@@ -5,6 +5,7 @@ import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.mccorby.rssreader.model.FeedMapper;
 import com.mccorby.rssreader.model.RssFeed;
 
 /**
@@ -12,7 +13,7 @@ import com.mccorby.rssreader.model.RssFeed;
  *
  * Created by JAC on 13/05/2015.
  */
-public class Mapper {
+public class Mapper implements FeedMapper {
 
     private static final String TAG = Mapper.class.getSimpleName();
 
@@ -29,14 +30,19 @@ public class Mapper {
         }
     };
 
-    public RssFeed getRssFeed(Channel.Item item) {
-        RssFeed feed = new RssFeed();
-        feed.setDescription(item.description);
-        feed.setGuid(item.guid);
-        feed.setLink(item.link);
-        feed.setTitle(item.title);
-        feed.setImageUrl(obtainFirstImg(feed));
-        return feed;
+    @Override
+    public RssFeed getRssFeed(Object item) {
+        if (item instanceof Channel.Item) {
+            Channel.Item channelItem = (Channel.Item) item;
+            RssFeed feed = new RssFeed();
+            feed.setDescription(channelItem.description);
+            feed.setGuid(channelItem.guid);
+            feed.setLink(channelItem.link);
+            feed.setTitle(channelItem.title);
+            feed.setImageUrl(obtainFirstImg(feed));
+            return feed;
+        }
+        return null;
     }
 
     /**

@@ -18,4 +18,21 @@ public interface FeedDAO {
      * @return a list of RssFeed objects
      */
     List<RssFeed> getRssFeeds(Context context);
+
+    /**
+     * Add a list of feeds to the underlying persistence system.
+     * This can be memory, a database, a file.
+     * @param feedList
+     */
+    void addFeeds(List<RssFeed> feedList);
+
+    /**
+     * Open the DAO if necessary.
+     */
+    void open();
+
+    /**
+     * Close the DAO if necessary.
+     */
+    void close();
 }

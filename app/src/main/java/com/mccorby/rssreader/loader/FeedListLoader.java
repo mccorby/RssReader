@@ -2,8 +2,12 @@ package com.mccorby.rssreader.loader;
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.util.Log;
 
-import com.mccorby.rssreader.api.RetrofitApiCaller;
+import com.mccorby.rssreader.dao.CacheDAO;
+import com.mccorby.rssreader.dao.FeedDAO;
 import com.mccorby.rssreader.dao.NetworkDAO;
 import com.mccorby.rssreader.model.RssFeed;
 
@@ -15,8 +19,10 @@ import java.util.List;
  */
 public class FeedListLoader extends AsyncTaskLoader<List<RssFeed>> {
 
+    private static final String TAG = FeedListLoader.class.getSimpleName();
     // We hold a reference to the Loader’s data here.
     private List<RssFeed> mData;
+    private FeedDAO mFeedDAO;
 
     public FeedListLoader(Context ctx) {
         // Loaders may be used across multiple Activitys (assuming they aren't
@@ -37,9 +43,25 @@ public class FeedListLoader extends AsyncTaskLoader<List<RssFeed>> {
     public List<RssFeed> loadInBackground() {
         // This method is called on a background thread and should generate a
         // new set of data to be delivered back to the client.
+
+        // Check connection...
+        boolean isConnected = isConnected();
+
+        if (isConnected) {
+            Log.d(TAG, "Using network DAO");
+            mFeedDAO = new NetworkDAO(getContext());
+        } else {
+            Log.d(TAG, "Using cache DAO");
+            mFeedDAO = new CacheDAO(getContext());
+        }
+        mFeedDAO.open();
         List<RssFeed> data = new ArrayList<>();
-        List<RssFeed> nData = new NetworkDAO().getRssFeeds(getContext());
+        List<RssFeed> nData = mFeedDAO.getRssFeeds(getContext());
         data = nData;
+        if (isConnected) {
+            mFeedDAO.addFeeds(data);
+        }
+        mFeedDAO.close();
         return data;
     }
 
@@ -133,5 +155,15 @@ public class FeedListLoader extends AsyncTaskLoader<List<RssFeed>> {
         // For a simple List, there is nothing to do. For something like a Cursor, we
         // would close it in this method. All resources associated with the Loader
         // should be released here.
+    }
+
+    private boolean isConnected() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+        return isConnected;
     }
 }
